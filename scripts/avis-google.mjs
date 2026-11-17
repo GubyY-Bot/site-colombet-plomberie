@@ -8,10 +8,16 @@ const PLACE_ID = (process.env.PLACE_ID || '').trim();
 const QUERY = process.env.PLACE_QUERY || 'Colombet Plomberie Le Cannet';
 const FIELDS = ['id', 'displayName', 'rating', 'userRatingCount', 'reviews', 'googleMapsUri'];
 
-if (!KEY) {
-  console.error('Secret GOOGLE_PLACES_KEY manquant : ajoute-le dans Settings > Secrets and variables > Actions.');
+// Affiche les erreurs en clair dans le résumé GitHub (sans jamais afficher la clé)
+function fail(msg) {
+  const clean = String(msg).replaceAll(KEY || '§', '***').replace(/\r?\n/g, ' ').slice(0, 900);
+  console.log('::error title=Avis Google::' + clean);
   process.exit(1);
 }
+process.on('unhandledRejection', e => fail(e?.message || e));
+process.on('uncaughtException', e => fail(e?.message || e));
+
+if (!KEY) fail('Secret GOOGLE_PLACES_KEY manquant ou vide : ajoute-le dans Settings > Secrets and variables > Actions.');
 
 async function getPlace() {
   if (PLACE_ID) {
