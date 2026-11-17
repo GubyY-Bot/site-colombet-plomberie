@@ -493,7 +493,7 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
       </div>
       <div class="g-badge">
         <span class="g-logo"><svg><use href="#i-g"/></svg></span>
-        <div><b>5,0</b> <span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><small>62 avis Google · 100 % de 5 étoiles</small></div>
+        <div><b data-g="note">5,0</b> <span class="stars" aria-label="5 étoiles sur 5">★★★★★</span><small data-g="badge">62 avis Google · 100 % de 5 étoiles</small></div>
       </div>
       <p class="trust"><svg><use href="#i-shield"/></svg>Garantie décennale MAAF · SIRET 100 909 175 00018 · APE 4322A</p>
     </div>
@@ -513,8 +513,8 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
 <div class="stats">
   <div class="wrap">
     <div class="stats-grid">
-      <div class="stat"><b>5,0/5</b><span>Note Google</span></div>
-      <div class="stat"><b>62</b><span>avis, tous à 5 étoiles</span></div>
+      <div class="stat"><b data-g="note5">5,0/5</b><span>Note Google</span></div>
+      <div class="stat"><b data-g="count">62</b><span data-g="countlabel">avis, tous à 5 étoiles</span></div>
       <div class="stat"><b>24h/24</b><span>Urgences 7j/7</span></div>
       <div class="stat"><b>0 €</b><span>Devis clair, sans engagement</span></div>
     </div>
@@ -661,13 +661,13 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
 <section class="sec" id="avis">
   <div class="wrap">
     <span class="eyebrow"><svg><use href="#i-drop"/></svg>Avis clients</span>
-    <h2>62 avis. <span class="accent">62 fois 5 étoiles.</span></h2>
+    <h2 data-g="title">62 avis. <span class="accent">62 fois 5 étoiles.</span></h2>
     <div class="avis-grid">
       <div class="g-card">
         <div class="top"><svg><use href="#i-g"/></svg>Avis Google</div>
-        <div class="score"><b>5,0</b><div><span class="stars">★★★★★</span><small>62 avis</small></div></div>
-        <div class="bars">
-          <div class="bar"><span>5</span><i style="--w:100%"></i><span>62</span></div>
+        <div class="score"><b data-g="note">5,0</b><div><span class="stars">★★★★★</span><small data-g="countavis">62 avis</small></div></div>
+        <div class="bars" data-g="bars">
+          <div class="bar"><span>5</span><i style="--w:100%"></i><span data-g="count">62</span></div>
           <div class="bar"><span>4</span><i></i><span>0</span></div>
           <div class="bar"><span>3</span><i></i><span>0</span></div>
           <div class="bar"><span>2</span><i></i><span>0</span></div>
@@ -677,7 +677,7 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
           <p class="kw-title">Ce qui revient le plus</p>
           <ul class="chips" style="margin-top:.6rem"><li>Réactif</li><li>Prix juste</li><li>Chantier propre</li><li>Chauffe-eau</li><li>Ponctuel</li><li>De bon conseil</li></ul>
         </div>
-        <a class="link-arrow" href="https://www.google.com/search?q=Colombet+Plomberie+Le+Cannet" target="_blank" rel="noopener">Voir tous les avis sur Google <svg width="16" height="16"><use href="#i-arrow"/></svg></a>
+        <a class="link-arrow" data-g="link" href="https://www.google.com/search?q=Colombet+Plomberie+Le+Cannet" target="_blank" rel="noopener">Voir tous les avis sur Google <svg width="16" height="16"><use href="#i-arrow"/></svg></a>
       </div>
       <div class="quote-card" aria-live="polite">
         <div class="quote-mark" aria-hidden="true">“</div>
@@ -824,7 +824,7 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
       </div>
       <div><h4>Navigation</h4><ul><li><a href="#services">Services</a></li><li><a href="#realisations">Réalisations</a></li><li><a href="#methode">Méthode</a></li><li><a href="#avis">Avis</a></li><li><a href="#zone">Zone</a></li></ul></div>
       <div><h4>Services</h4><ul><li><a href="#services">Dépannage</a></li><li><a href="#services">Rénovation</a></li><li><a href="#services">Chauffage &amp; eau chaude</a></li><li><a href="#services">Sanitaires</a></li></ul></div>
-      <div><h4>Coordonnées</h4><ul><li>9bis chemin de Carimaï</li><li>06110 Le Cannet</li><li>Ouvert 24h/24 · 7j/7</li><li>Assurance décennale : MAAF</li><li><a href="https://www.google.com/search?q=Colombet+Plomberie+Le+Cannet" target="_blank" rel="noopener">Fiche Google · 5,0/5</a></li></ul></div>
+      <div><h4>Coordonnées</h4><ul><li>9bis chemin de Carimaï</li><li>06110 Le Cannet</li><li>Ouvert 24h/24 · 7j/7</li><li>Assurance décennale : MAAF</li><li><a href="https://www.google.com/search?q=Colombet+Plomberie+Le+Cannet" target="_blank" rel="noopener" data-g="foot">Fiche Google · 5,0/5</a></li></ul></div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 Colombet Plomberie · Théo Colombet · SIRET 100 909 175 00018 · Assurance décennale MAAF</span>
@@ -898,6 +898,32 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
   function renderQ(){var r=reviews[qi];$('q-text').textContent=r.t;$('q-name').textContent=r.n;$('q-meta').textContent=r.m;$('q-av').textContent=r.n.charAt(0);$('q-count').textContent=(qi+1)+' / '+reviews.length}
   $('q-prev').addEventListener('click',function(){qi=(qi-1+reviews.length)%reviews.length;renderQ()});
   $('q-next').addEventListener('click',function(){qi=(qi+1)%reviews.length;renderQ()});
+
+  // Avis Google mis à jour automatiquement chaque jour (fichier avis.json, voir scripts/avis-google.mjs)
+  function applyAvis(d){
+    if(!d||typeof d.rating!=='number'||typeof d.count!=='number')return;
+    var n=d.count,note=d.rating.toFixed(1).replace('.',','),all5=d.rating>=5;
+    function each(k,f){document.querySelectorAll('[data-g="'+k+'"]').forEach(f)}
+    each('note',function(e){e.textContent=note});
+    each('note5',function(e){e.textContent=note+'/5'});
+    each('count',function(e){e.textContent=n});
+    each('countavis',function(e){e.textContent=n+' avis'});
+    each('countlabel',function(e){e.textContent=all5?'avis, tous à 5 étoiles':'avis Google'});
+    each('badge',function(e){e.textContent=n+' avis Google'+(all5?' · 100 % de 5 étoiles':'')});
+    each('foot',function(e){e.textContent='Fiche Google · '+note+'/5'});
+    each('title',function(e){e.innerHTML=n+' avis. <span class="accent">'+(all5?n+' fois 5 étoiles.':'Note '+note+'/5.')+'</span>'});
+    if(!all5)each('bars',function(e){e.style.display='none'});
+    if(d.url)each('link',function(e){e.href=d.url});
+    if(d.reviews&&d.reviews.length){
+      var seen={},fresh=d.reviews.filter(function(r){return r.text}).map(function(r){seen[r.author.toLowerCase()]=1;return{t:r.text,n:r.author,m:'Avis Google'+(r.when?' · '+r.when:'')}});
+      reviews=fresh.concat(reviews.filter(function(r){return !seen[r.n.toLowerCase()]}));
+      qi=0;renderQ();
+    }
+  }
+  function loadAvis(url,next){
+    fetch(url,{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(applyAvis).catch(function(){if(next)next()});
+  }
+  loadAvis('https://raw.githubusercontent.com/GubyY-Bot/site-colombet-plomberie/main/avis.json',function(){loadAvis('avis.json')});
 
   // Formulaire : prépare le message à envoyer par email
   var form=$('quote');
