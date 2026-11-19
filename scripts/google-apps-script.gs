@@ -84,7 +84,7 @@ function notifHtml(d, nomComplet, urgent, email) {
     '<p style="color:#5A6A86;font-size:13px;margin-top:14px">' + (email ? 'Le client a reçu un accusé de réception. Vous pouvez répondre directement à ce mail pour lui écrire.' : 'Le client n\'a pas laissé d\'email : rappelez-le au téléphone.') + '</p></div>';
 }
 
-/* ---------- Accusé de réception reçu par le client (modèle B + signature marine) ---------- */
+/* ---------- Accusé de réception reçu par le client (modèle B « Demande bien reçue ») ---------- */
 function accuseHtml(d) {
   var prenom = clean(d.prenom) || clean(d.nom);
   return '' +
@@ -122,19 +122,15 @@ function accuseHtml(d) {
     '<a href="' + TEL_LINK + '" style="display:inline-block;background:#2E9BDA;color:#ffffff;font-weight:bold;font-size:16px;text-decoration:none;padding:14px 26px;border-radius:999px">📞 Appeler Théo · ' + TEL + '</a>' +
   '</td></tr>' +
 
-  // Signature marine (comme le modèle A)
-  '<tr><td style="background:#20305B;padding:24px 30px">' +
-    '<table role="presentation" cellpadding="0" cellspacing="0"><tr>' +
-      '<td style="padding-right:20px;vertical-align:middle"><img src="' + LOGO_BLANC + '" width="130" alt="Colombet Plomberie" style="display:block;border:0;width:130px;height:auto"></td>' +
-      '<td style="border-left:1px solid #4A5A80;padding-left:20px;color:#ffffff;font-size:13px;line-height:1.75;vertical-align:middle">' +
-        '<b style="font-size:15px">Théo Colombet</b> · Artisan plombier<br>' +
-        '📞 <a href="' + TEL_LINK + '" style="color:#ffffff;text-decoration:none">' + TEL + '</a><br>' +
-        '✉️ <a href="mailto:' + DEST + '" style="color:#ffffff;text-decoration:none">' + DEST + '</a><br>' +
-        '🌐 <a href="' + SITE + '" style="color:#ffffff;text-decoration:none">colombet-plomberie.fr</a><br>' +
-        '📍 9 bis chemin de Carimaï, 06110 Le Cannet' +
-      '</td></tr></table>' +
+  // Pied de page blanc avec logo couleur
+  '<tr><td style="border-top:1px solid #E3EAF2;padding:24px 30px;text-align:center;font-size:12.5px;line-height:1.8;color:#5A6A86">' +
+    '<img src="' + LOGO + '" width="120" alt="Colombet Plomberie" style="display:block;margin:0 auto 10px;border:0;width:120px;height:auto">' +
+    '<b style="color:#20305B">Colombet Plomberie</b> · 9 bis chemin de Carimaï, 06110 Le Cannet<br>' +
+    '<a href="' + SITE + '" style="color:#5A6A86;text-decoration:none">colombet-plomberie.fr</a> · ' +
+    '<a href="mailto:' + DEST + '" style="color:#5A6A86;text-decoration:none">' + DEST + '</a> · ' +
+    '<a href="' + TEL_LINK + '" style="color:#5A6A86;text-decoration:none">' + TEL + '</a><br>' +
+    '⭐⭐⭐⭐⭐ 5,0/5 sur Google · Dépannage 24h/24, 7j/7 · Garantie décennale MAAF' +
   '</td></tr>' +
-  '<tr><td style="background:#172447;color:#9DB0CF;font-size:11.5px;padding:12px 30px;line-height:1.6">⭐ 5,0/5 sur Google · Dépannage 24h/24, 7j/7 · Garantie décennale MAAF · SIRET 100 909 175 00018</td></tr>' +
   '</table></div>';
 }
 
