@@ -1006,7 +1006,7 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
       .then(function(r){return r.json()})
       .then(function(j){
         if(j&&(j.ok===true||String(j.success)==='true')){
-          $('ok-text').textContent=(SCRIPT_URL&&email?'Un email de confirmation vient de vous être envoyé à '+email+'. ':'')+'Théo a bien reçu votre demande et vous rappelle très vite. Pour une fuite en cours, appelez directement le 07 78 46 82 65.';
+          $('ok-text').textContent=(SCRIPT_URL&&email?'Un email de confirmation vient de vous être envoyé à '+email+' (pensez à regarder dans vos spams). ':'')+'Théo a bien reçu votre demande et vous rappelle très vite. Pour une fuite en cours, appelez directement le 07 78 46 82 65.';
           $('ok-title').textContent='✅ Merci'+(prenom?' '+prenom:'')+', votre demande est bien reçue !';
           $('ok').hidden=false;$('ok').scrollIntoView({block:'nearest'});
           form.querySelectorAll('#f-msg').forEach(function(t){t.value=''});

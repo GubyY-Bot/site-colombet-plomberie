@@ -29,8 +29,9 @@ function doPost(e) {
     // 1) Mail pour Théo
     var notif = {
       to: DEST,
-      subject: (urgent ? '⚡ URGENT – ' : '') + 'Nouvelle demande : ' + clean(d.besoin) + ' – ' + nomComplet,
+      subject: (urgent ? 'URGENT - ' : '') + 'Nouvelle demande : ' + clean(d.besoin) + ' – ' + nomComplet,
       htmlBody: notifHtml(d, nomComplet, urgent, emailOk ? email : ''),
+      body: texte(d, nomComplet),
       name: 'Site Colombet Plomberie'
     };
     if (emailOk) notif.replyTo = email;
@@ -40,8 +41,9 @@ function doPost(e) {
     if (emailOk) {
       MailApp.sendEmail({
         to: email,
-        subject: 'Votre demande a bien été reçue ✔ – Colombet Plomberie',
+        subject: 'Votre demande a bien été reçue - Colombet Plomberie',
         htmlBody: accuseHtml(d),
+        body: 'Bonjour ' + (clean(d.prenom) || clean(d.nom)) + ',\n\nMerci pour votre demande, elle est bien arrivée. Théo l\'étudie et vous rappelle très rapidement.\n\n' + texte(d, (clean(d.prenom) ? clean(d.prenom) + ' ' : '') + clean(d.nom)) + '\n\nUne fuite en cours ? Appelez directement le ' + TEL + ', 24h/24 et 7j/7.\n\nThéo Colombet - Colombet Plomberie\n9 bis chemin de Carimaï, 06110 Le Cannet\ncolombet-plomberie.fr',
         name: 'Colombet Plomberie',
         replyTo: DEST
       });
@@ -50,6 +52,10 @@ function doPost(e) {
   } catch (err) {
     return out({ ok: false, error: String(err) });
   }
+}
+
+function texte(d, nomComplet) {
+  return 'Besoin : ' + clean(d.besoin) + '\nNom : ' + nomComplet + '\nTéléphone : ' + clean(d.tel) + '\nVille : ' + clean(d.ville) + '\nMessage : ' + (clean(d.message) || '-');
 }
 
 function doGet() { return out({ ok: true, service: 'Colombet Plomberie' }); }
