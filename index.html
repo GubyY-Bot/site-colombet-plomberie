@@ -789,6 +789,7 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
         <div class="field"><label class="f-label" for="f-com">Ville</label><input id="f-com" name="ville" list="villes" autocomplete="address-level2" placeholder="Ex. Le Cannet"><datalist id="villes"><option value="Le Cannet"><option value="Cannes"><option value="La Bocca"><option value="Mougins"><option value="Mandelieu-la-Napoule"><option value="Mouans-Sartoux"><option value="Vallauris"><option value="Golfe-Juan"><option value="Antibes"><option value="Grasse"></datalist></div>
         <div class="field"><label class="f-label" for="f-tel">Téléphone</label><input id="f-tel" name="tel" type="tel" autocomplete="tel" placeholder="06 00 00 00 00"></div>
       </div>
+      <div class="field"><label class="f-label" for="f-email">Email <small style="font-weight:400;opacity:.7">(pour recevoir la confirmation)</small></label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="vous@exemple.fr"></div>
       <div class="field"><label class="f-label" for="f-msg">Votre message</label><textarea id="f-msg" name="message" placeholder="Décrivez la situation en quelques mots…"></textarea></div>
       <div class="urgent-row">
         <span class="switch"><input type="checkbox" id="f-urg" name="urgent" aria-label="C'est urgent"><i></i></span>
@@ -995,10 +996,17 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
       'Message':$('f-msg').value.trim()||'(pas de message)'
     };
     function fallback(){$('sent').hidden=false;$('sent').scrollIntoView({block:'nearest'})}
-    fetch('https://formsubmit.co/ajax/colombetplomberie@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+    var email=$('f-email').value.trim();data['Email']=email||'(non renseigné)';
+    // Adresse du script Google (Gmail) : quand elle est renseignée, le client reçoit aussi un accusé de réception
+    var SCRIPT_URL='';
+    var req=SCRIPT_URL
+      ? fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({besoin:need,urgent:$('f-urg').checked,nom:nom,prenom:prenom,tel:tel,email:email,ville:$('f-com').value.trim(),message:$('f-msg').value.trim(),_honey:$('f-honey').value})})
+      : fetch('https://formsubmit.co/ajax/colombetplomberie@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});
+    req
       .then(function(r){return r.json()})
       .then(function(j){
-        if(j&&String(j.success)==='true'){
+        if(j&&(j.ok===true||String(j.success)==='true')){
+          $('ok-text').textContent=(SCRIPT_URL&&email?'Un email de confirmation vient de vous être envoyé à '+email+'. ':'')+'Théo a bien reçu votre demande et vous rappelle très vite. Pour une fuite en cours, appelez directement le 07 78 46 82 65.';
           $('ok-title').textContent='✅ Merci'+(prenom?' '+prenom:'')+', votre demande est bien reçue !';
           $('ok').hidden=false;$('ok').scrollIntoView({block:'nearest'});
           form.querySelectorAll('#f-msg').forEach(function(t){t.value=''});
