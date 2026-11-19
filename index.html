@@ -998,7 +998,7 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
     function fallback(){$('sent').hidden=false;$('sent').scrollIntoView({block:'nearest'})}
     var email=$('f-email').value.trim();data['Email']=email||'(non renseigné)';
     // Adresse du script Google (Gmail) : quand elle est renseignée, le client reçoit aussi un accusé de réception
-    var SCRIPT_URL='';
+    var SCRIPT_URL='https://script.google.com/macros/s/AKfycbzIEWdoNSmoI1mRi0em93cWhFT8JoK0yyZ8QjnrNYTU2hdnaPHv1DgX5qTg061H40QQ/exec';
     var req=SCRIPT_URL
       ? fetch(SCRIPT_URL,{method:'POST',body:JSON.stringify({besoin:need,urgent:$('f-urg').checked,nom:nom,prenom:prenom,tel:tel,email:email,ville:$('f-com').value.trim(),message:$('f-msg').value.trim(),_honey:$('f-honey').value})})
       : fetch('https://formsubmit.co/ajax/colombetplomberie@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});
