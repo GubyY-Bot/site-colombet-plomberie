@@ -795,10 +795,15 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
         <div><b>⚡ C'est urgent</b><small>Pour une fuite en cours, appelez plutôt directement le 07 78 46 82 65.</small></div>
       </div>
       <p class="err" id="f-err" hidden>Indiquez votre nom et votre numéro de téléphone pour que Théo puisse vous rappeler.</p>
-      <button class="btn btn-navy" type="submit">Envoyer ma demande<svg><use href="#i-arrow"/></svg></button>
+      <input type="text" name="_honey" id="f-honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <button class="btn btn-navy" type="submit" id="f-send">Envoyer ma demande<svg><use href="#i-arrow"/></svg></button>
+      <div class="sent" id="ok" hidden role="status">
+        <b id="ok-title">✅ Demande bien reçue !</b>
+        <p id="ok-text">Merci. Théo a reçu votre demande par email et vous rappelle très vite. Pour une fuite en cours, appelez directement le 07 78 46 82 65.</p>
+      </div>
       <div class="sent" id="sent" hidden>
         <b>Votre demande est prête</b>
-        <p>Envoyez-la à Théo sur WhatsApp ou par email à colombetplomberie@gmail.com, ou appelez le 07 78 46 82 65.</p>
+        <p>L'envoi automatique n'a pas fonctionné. Envoyez-la à Théo sur WhatsApp ou par email à colombetplomberie@gmail.com, ou appelez le 07 78 46 82 65.</p>
         <pre id="sent-text"></pre>
         <div class="acts">
           <a class="btn btn-wa" id="sent-wa" href="#" target="_blank" rel="noopener">Envoyer sur WhatsApp</a>
@@ -978,8 +983,29 @@ form.quote{position:relative;overflow:hidden;min-height:30rem;isolation:isolate}
     $('sent-text').textContent=txt;
     $('sent-mail').href='mailto:colombetplomberie@gmail.com?subject='+encodeURIComponent('Demande de devis – '+need)+'&body='+encodeURIComponent(txt);
     $('sent-wa').href='https://wa.me/33778468265?text='+encodeURIComponent(txt);
-    $('sent').hidden=false;
-    $('sent').scrollIntoView({block:'nearest'});
+    if($('f-honey').value)return;
+    // Envoi automatique de la demande par email à Théo (service FormSubmit)
+    var btn=$('f-send');btn.disabled=true;btn.firstChild.textContent='Envoi en cours… ';
+    $('ok').hidden=true;$('sent').hidden=true;
+    var data={
+      _subject:($('f-urg').checked?'⚡ URGENT – ':'')+'Nouvelle demande : '+need+' – '+(prenom?prenom+' ':'')+nom,
+      _template:'table',_captcha:'false',
+      'Besoin':need+($('f-urg').checked?' (URGENT)':''),
+      'Nom':nom,'Prénom':prenom,'Téléphone':tel,'Ville':$('f-com').value.trim(),
+      'Message':$('f-msg').value.trim()||'(pas de message)'
+    };
+    function fallback(){$('sent').hidden=false;$('sent').scrollIntoView({block:'nearest'})}
+    fetch('https://formsubmit.co/ajax/colombetplomberie@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){return r.json()})
+      .then(function(j){
+        if(j&&String(j.success)==='true'){
+          $('ok-title').textContent='✅ Merci'+(prenom?' '+prenom:'')+', votre demande est bien reçue !';
+          $('ok').hidden=false;$('ok').scrollIntoView({block:'nearest'});
+          form.querySelectorAll('#f-msg').forEach(function(t){t.value=''});
+        }else fallback();
+      })
+      .catch(fallback)
+      .then(function(){btn.disabled=false;btn.firstChild.textContent='Envoyer ma demande'});
   });
   $('sent-copy').addEventListener('click',function(){
     var v=$('sent-text').textContent;
